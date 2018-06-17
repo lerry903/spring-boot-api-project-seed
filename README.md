@@ -1,5 +1,5 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-[![GitHub Release](https://img.shields.io/github/release/lihengming/spring-boot-api-project-seed.svg)](https://github.com/lerry903/spring-boot-api-project-seed/releases)
+[![GitHub Release](https://img.shields.io/github/release/lerry903/spring-boot-api-project-seed.svg)](https://github.com/lerry903/spring-boot-api-project-seed/releases)
 ## 简介
 Spring Boot API Project Seed 是一个基于Spring Boot & MyBatis的种子项目，用于快速构建中小型API、RESTful API项目，该种子项目已经有过多个真实项目的实践，稳定、简单、快速，使我们摆脱那些重复劳动，专注于业务代码的编写，减少加班。
 
