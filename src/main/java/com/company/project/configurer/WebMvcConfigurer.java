@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -104,6 +105,13 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 }
             });
         }
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/META-INF/resources/")
+                .setCachePeriod(0);
     }
 
     private void responseResult(HttpServletResponse response, PlatformResult result) {

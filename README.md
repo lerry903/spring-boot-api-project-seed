@@ -31,7 +31,6 @@ Spring Boot API Project Seed 是一个基于Spring Boot & MyBatis的种子项目
 - 建议业务失败使用```BusinessException```子类抛出，由统一异常处理器来封装业务失败的响应结果，比如```throw new DataNotFoundException()```，会直接被封装为```{"code":50001,"message":"数据未找到"}```返回，无需自己处理，尽情抛出
 - 需要工具类的话建议先从```Hutool```中找，实在没有再继承```Hutool```中相应的工具类造轮子或引入类库，尽量精简项目
 - 开发规范建议遵循阿里巴巴Java开发手册（[最新版下载](https://github.com/alibaba/p3c))
-- 建议在公司内部使用[ShowDoc](https://github.com/star7th/showdoc)、[SpringFox-Swagger2](https://github.com/springfox/springfox) 、[RAP](https://github.com/thx/RAP)等开源项目来编写、管理API文档
  
 ## 技术选型&文档
 - Spring Boot（[查看Spring Boot学习&使用指南](https://blog.csdn.net/lsy0903/article/category/6413992)）
@@ -41,6 +40,7 @@ Spring Boot API Project Seed 是一个基于Spring Boot & MyBatis的种子项目
 - Druid Spring Boot Starter（[查看官方中文文档](https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter/)）
 - Fastjson（[查看官方中文文档](https://github.com/Alibaba/fastjson/wiki/%E9%A6%96%E9%A1%B5)）
 - Hutool工具包（[查看官方文档](http://hutool.mydoc.io/)）
+- Swagger API管理（[查看文档](https://github.com/SpringForAll/spring-boot-starter-swagger)）
 - 其他略
 
 ## License
