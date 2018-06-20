@@ -35,6 +35,19 @@
         <appender-ref ref="FILE"/>
     </root>
 
+    <appender name="druidStatLoggerAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/druidStatLog-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.alibaba.druid.pool.DruidDataSourceStatLoggerImpl" level="INFO" additivity="false">
+        <appender-ref ref="druidStatLoggerAppender" />
+    </logger>
+
     <!--
         &lt;!&ndash; show parameters for hibernate sql 专为 Hibernate 定制 &ndash;&gt;
         <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />
