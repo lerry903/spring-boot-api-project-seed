@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 /**
  * Created with IntelliJ IDEA.
  * Description:
- *
+ *      响应体格式处理器（主要转换逻辑都在这里）
  * @author LErry.li
  * Date: 2018-06-15
  * Time: 14:41
