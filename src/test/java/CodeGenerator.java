@@ -53,6 +53,12 @@ public class CodeGenerator {
      */
     private static final String REDUCE_TABLE_PREFIX = "T_";
 
+    /**
+     * 生成接口的类型
+     *  普通POST和RESTful
+     */
+    private static final String API_TYPE = "RESTful";
+
     public static void main(String[] args) {
         genCode("t_user");
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");
@@ -217,7 +223,11 @@ public class CodeGenerator {
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            cfg.getTemplate("controller.ftl").process(data, new FileWriter(file));
+            String templateName = "controller.ftl";
+            if(!"POST".equals(API_TYPE)){
+                templateName = "controller-restful.ftl";
+            }
+            cfg.getTemplate(templateName).process(data, new FileWriter(file));
 
             System.out.println(modelNameUpperCamel + "Controller.java 生成成功");
         } catch (Exception e) {

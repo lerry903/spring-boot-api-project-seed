@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("${baseRequestMapping}")
 public class ${modelNameUpperCamel}Controller {
+
     @Resource
     private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
 
