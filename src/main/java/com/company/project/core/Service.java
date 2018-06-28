@@ -13,32 +13,37 @@ public interface Service<T> {
     /**
      * 持久化
      * @param model
+     * @return
      */
-    void save(T model);
+    int save(T model);
 
     /**
      * 批量持久化
      * @param models
+     * @return
      */
-    void save(List<T> models);
+    int save(List<T> models);
 
     /**
      * 通过主鍵刪除
      * @param id
+     * @return
      */
-    void deleteById(Integer id);
+    int deleteById(Integer id);
 
     /**
      * 批量刪除 eg：ids -> “1,2,3,4”
      * @param ids
+     * @return
      */
-    void deleteByIds(String ids);
+    int deleteByIds(String ids);
 
     /**
      * 更新
      * @param model
+     * @return
      */
-    void update(T model);
+    int update(T model);
 
     /**
      * 通过ID查找

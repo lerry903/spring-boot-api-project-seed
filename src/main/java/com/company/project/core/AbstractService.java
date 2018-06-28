@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 基于通用MyBatis Mapper插件的Service接口的实现
+ *
  * @author lerry
  */
 public abstract class AbstractService<T> implements Service<T> {
@@ -21,7 +22,7 @@ public abstract class AbstractService<T> implements Service<T> {
     protected CrudMapper<T> mapper;
 
     /**
-     *  当前泛型真实类型的Class
+     * 当前泛型真实类型的Class
      */
     private Class<T> modelClass;
 
@@ -32,32 +33,32 @@ public abstract class AbstractService<T> implements Service<T> {
 
     @Override
     @ServiceLog(description = "持久化")
-    public void save(T model) {
-        mapper.insertSelective(model);
+    public int save(T model) {
+        return mapper.insertSelective(model);
     }
 
     @Override
     @ServiceLog(description = "批量持久化")
-    public void save(List<T> models) {
-        mapper.insertList(models);
+    public int save(List<T> models) {
+        return mapper.insertList(models);
     }
 
     @Override
     @ServiceLog(description = "通过主鍵刪除")
-    public void deleteById(Integer id) {
-        mapper.deleteByPrimaryKey(id);
+    public int deleteById(Integer id) {
+        return mapper.deleteByPrimaryKey(id);
     }
 
     @Override
     @ServiceLog(description = "通过主鍵批量刪除")
-    public void deleteByIds(String ids) {
-        mapper.deleteByIds(ids);
+    public int deleteByIds(String ids) {
+        return mapper.deleteByIds(ids);
     }
 
     @Override
     @ServiceLog(description = "更新")
-    public void update(T model) {
-        mapper.updateByPrimaryKeySelective(model);
+    public int update(T model) {
+        return mapper.updateByPrimaryKeySelective(model);
     }
 
     @Override
