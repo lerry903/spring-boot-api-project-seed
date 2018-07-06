@@ -308,6 +308,10 @@ public class CodeGenerator {
             pluginConfiguration.setConfigurationType("org.mybatis.generator.plugins.SerializablePlugin");
             context.addPluginConfiguration(pluginConfiguration);
         }
+        //生成bean的toString插件
+        pluginConfiguration = new PluginConfiguration();
+        pluginConfiguration.setConfigurationType("org.mybatis.generator.plugins.ToStringPlugin");
+        context.addPluginConfiguration(pluginConfiguration);
     }
 
 }
