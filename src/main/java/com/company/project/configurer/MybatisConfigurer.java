@@ -1,6 +1,6 @@
 package com.company.project.configurer;
 
-import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -24,12 +24,12 @@ public class MybatisConfigurer {
 
     @Bean
     public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-        factory.setDataSource(dataSource);
-        factory.setTypeAliasesPackage(MODEL_PACKAGE);
+        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        sqlSessionFactory.setDataSource(dataSource);
+        sqlSessionFactory.setTypeAliasesPackage(MODEL_PACKAGE);
 
         //配置分页插件，详情请查阅官方文档
-        PageHelper pageHelper = new PageHelper();
+        PageInterceptor interceptor = new PageInterceptor();
         Properties properties = new Properties();
         //分页尺寸为0时查询所有纪录不再执行分页
         properties.setProperty("pageSizeZero", "true");
@@ -37,15 +37,16 @@ public class MybatisConfigurer {
         properties.setProperty("reasonable", "true");
         //支持通过 Mapper 接口参数来传递分页参数
         properties.setProperty("supportMethodsArguments", "true");
-        pageHelper.setProperties(properties);
+        interceptor.setProperties(properties);
 
         //添加插件
-        factory.setPlugins(new Interceptor[]{pageHelper});
+        //为了防止插件被重复注册，可以在启动类中使用"@SpringBootApplication(exclude = PageHelperAutoConfiguration.class)"排除默认的配置
+        sqlSessionFactory.setPlugins(new Interceptor[]{interceptor});
 
         //添加XML目录
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        factory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
-        return factory.getObject();
+        sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+        return sqlSessionFactory.getObject();
     }
 
     @Bean
