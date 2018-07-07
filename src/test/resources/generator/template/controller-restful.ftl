@@ -2,7 +2,7 @@ package ${basePackage}.web;
 
 import ${basePackage}.model.${modelNameUpperCamel};
 import ${basePackage}.service.${modelNameUpperCamel}Service;
-import ${basePackage}.common.result.ResponseResult;
+import ${responseResultPackage};
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         ${modelNameLowerCamel}Service.deleteById(id);
     }
 
@@ -43,7 +43,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @GetMapping("/{id}")
-    public ${modelNameUpperCamel} detail(@PathVariable Integer id) {
+    public ${modelNameUpperCamel} detail(@PathVariable Long id) {
         return ${modelNameLowerCamel}Service.findById(id);
     }
 

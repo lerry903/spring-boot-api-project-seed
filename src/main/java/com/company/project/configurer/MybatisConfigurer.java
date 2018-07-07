@@ -1,9 +1,9 @@
 package com.company.project.configurer;
 
+import com.company.project.common.mapper.CrudMapper;
 import com.github.pagehelper.PageInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -13,7 +13,8 @@ import tk.mybatis.spring.mapper.MapperScannerConfigurer;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-import static com.company.project.core.ProjectConstant.*;
+import static com.company.project.common.ProjectConstant.MAPPER_BASE_PACKAGE;
+import static com.company.project.common.ProjectConstant.TYPE_ALIASES_PACKAGE;
 
 /**
  * Mybatis & Mapper & PageHelper 配置
@@ -24,9 +25,9 @@ public class MybatisConfigurer {
 
     @Bean
     public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+        PackagesSqlSessionFactoryBean sqlSessionFactory = new PackagesSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
-        sqlSessionFactory.setTypeAliasesPackage(MODEL_PACKAGE);
+        sqlSessionFactory.setTypeAliasesPackage(TYPE_ALIASES_PACKAGE);
 
         //配置分页插件，详情请查阅官方文档
         PageInterceptor interceptor = new PageInterceptor();
@@ -53,11 +54,11 @@ public class MybatisConfigurer {
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactoryBean");
-        mapperScannerConfigurer.setBasePackage(MAPPER_PACKAGE);
+        mapperScannerConfigurer.setBasePackage(MAPPER_BASE_PACKAGE);
 
         //配置通用Mapper，详情请查阅官方文档
         Properties properties = new Properties();
-        properties.setProperty("mappers", MAPPER_INTERFACE_REFERENCE);
+        properties.setProperty("mappers", CrudMapper.class.getName());
         //insert、update是否判断字符串类型!='' 即 test="str != null"表达式内是否追加 and str != ''
         properties.setProperty("notEmpty", "false");
         properties.setProperty("IDENTITY", "MYSQL");

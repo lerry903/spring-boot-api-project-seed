@@ -2,7 +2,7 @@ package ${basePackage}.web;
 
 import ${basePackage}.model.${modelNameUpperCamel};
 import ${basePackage}.service.${modelNameUpperCamel}Service;
-import ${basePackage}.common.result.ResponseResult;
+import ${responseResultPackage};
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +35,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @PostMapping("/delete")
-    public void delete(@RequestParam Integer id) {
+    public void delete(@RequestParam Long id) {
         ${modelNameLowerCamel}Service.deleteById(id);
     }
 
@@ -46,7 +46,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @PostMapping("/detail")
-    public  ${modelNameUpperCamel} detail(@RequestParam Integer id) {
+    public  ${modelNameUpperCamel} detail(@RequestParam Long id) {
         return ${modelNameLowerCamel}Service.findById(id);
     }
 

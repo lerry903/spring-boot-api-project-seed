@@ -1,4 +1,8 @@
 import com.google.common.base.CaseFormat;
+import com.company.project.common.mapper.CrudMapper;
+import com.company.project.common.result.ResponseResult;
+import com.company.project.common.service.AbstractService;
+import com.company.project.common.service.Service;
 import freemarker.template.TemplateExceptionHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -9,10 +13,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.company.project.core.ProjectConstant.*;
+import static com.company.project.common.ProjectConstant.BASE_PACKAGE;
+
 
 /**
  * 代码生成器，根据数据表名称生成对应的Model、Mapper、Service、Controller简化开发。
@@ -30,9 +34,16 @@ public class CodeGenerator {
     private static final String JAVA_PATH = "/src/main/java"; //java文件路径
     private static final String RESOURCES_PATH = "/src/main/resources";//资源文件路径
 
-    private static final String PACKAGE_PATH_SERVICE = packageConvertPath(SERVICE_PACKAGE);//生成的Service存放路径
-    private static final String PACKAGE_PATH_SERVICE_IMPL = packageConvertPath(SERVICE_IMPL_PACKAGE);//生成的Service实现存放路径
-    private static final String PACKAGE_PATH_CONTROLLER = packageConvertPath(CONTROLLER_PACKAGE);//生成的Controller存放路径
+    private static String subPackage = null; //分模块开发的子包
+    private static String basePackage = BASE_PACKAGE + "."+subPackage;
+    private static String MAPPER_PACKAGE = basePackage + ".dao";//生成的Mapper所在包
+    private static String MODEL_PACKAGE = basePackage + ".model";//生成的Model所在包
+    private static String SERVICE_PACKAGE = basePackage + ".service";//生成的Service所在包
+    private static String SERVICE_IMPL_PACKAGE = SERVICE_PACKAGE + ".impl";//生成的ServiceImpl所在包
+    private static String CONTROLLER_PACKAGE = basePackage + ".web";//生成的Controller所在包
+    private static String PACKAGE_PATH_SERVICE = packageConvertPath(SERVICE_PACKAGE);//生成的Service存放路径
+    private static String PACKAGE_PATH_SERVICE_IMPL = packageConvertPath(SERVICE_IMPL_PACKAGE);//生成的Service实现存放路径
+    private static String PACKAGE_PATH_CONTROLLER = packageConvertPath(CONTROLLER_PACKAGE);//生成的Controller存放路径
 
     private static final String CREATE_BY = "CodeGenerator";//@createBy
     private static final String AUTHOR = "LErry.li";//@author
@@ -60,7 +71,17 @@ public class CodeGenerator {
     private static final String API_TYPE = "RESTful";
 
     public static void main(String[] args) {
-        genCode("t_user");
+        if(subPackage == null){
+            System.out.println("请输入生成代码的子包：");
+            try {
+                Scanner scan = new Scanner(System.in);
+                subPackage = scan.nextLine();
+                setPackage(subPackage);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        genCode("t_sys_group", "t_sys_role", "t_sys_user", "t_sys_menu", "t_sys_user_role", "t_sys_role_menu");
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");
     }
 
@@ -180,7 +201,9 @@ public class CodeGenerator {
             String modelNameUpperCamel = StringUtils.isEmpty(modelName) ? tableNameConvertUpperCamel(tableName) : modelName;
             data.put("modelNameUpperCamel", modelNameUpperCamel);
             data.put("modelNameLowerCamel", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, modelNameUpperCamel));
-            data.put("basePackage", BASE_PACKAGE);
+            data.put("basePackage", basePackage);
+            data.put("abstractServicePackage", AbstractService.class.getName());
+            data.put("servicePackage", Service.class.getName());
 
             File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_SERVICE + modelNameUpperCamel + "Service.java");
             if (!file.getParentFile().exists()) {
@@ -217,7 +240,8 @@ public class CodeGenerator {
             data.put("baseRequestMapping", modelNameConvertMappingPath(modelNameUpperCamel));
             data.put("modelNameUpperCamel", modelNameUpperCamel);
             data.put("modelNameLowerCamel", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, modelNameUpperCamel));
-            data.put("basePackage", BASE_PACKAGE);
+            data.put("basePackage", basePackage);
+            data.put("responseResultPackage", ResponseResult.class.getName());
 
             File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER + modelNameUpperCamel + "Controller.java");
             if (!file.getParentFile().exists()) {
@@ -300,7 +324,7 @@ public class CodeGenerator {
         PluginConfiguration pluginConfiguration = new PluginConfiguration();
         //通用Mapper插件
         pluginConfiguration.setConfigurationType("tk.mybatis.mapper.generator.MapperPlugin");
-        pluginConfiguration.addProperty("mappers", MAPPER_INTERFACE_REFERENCE);
+        pluginConfiguration.addProperty("mappers", CrudMapper.class.getName());
         context.addPluginConfiguration(pluginConfiguration);
         //实现序列化接口插件
         if(IMPLEMENTS_SERIALIZABLE){
@@ -312,6 +336,22 @@ public class CodeGenerator {
         pluginConfiguration = new PluginConfiguration();
         pluginConfiguration.setConfigurationType("org.mybatis.generator.plugins.ToStringPlugin");
         context.addPluginConfiguration(pluginConfiguration);
+    }
+
+    /**
+     * 如果是在控制台输入子包，这要重新刷新一下个个包的路径
+     * @param subPackage 子包路径
+     */
+    private static void setPackage(String subPackage) {
+        basePackage = BASE_PACKAGE + "."+subPackage;
+        MAPPER_PACKAGE = basePackage + ".dao";
+        MODEL_PACKAGE = basePackage + ".model";
+        SERVICE_PACKAGE = basePackage + ".service";
+        SERVICE_IMPL_PACKAGE = SERVICE_PACKAGE + ".impl";
+        CONTROLLER_PACKAGE = basePackage + ".web";
+        PACKAGE_PATH_SERVICE = packageConvertPath(SERVICE_PACKAGE);//生成的Service存放路径
+        PACKAGE_PATH_SERVICE_IMPL = packageConvertPath(SERVICE_IMPL_PACKAGE);//生成的Service实现存放路径
+        PACKAGE_PATH_CONTROLLER = packageConvertPath(CONTROLLER_PACKAGE);//生成的Controller存放路径
     }
 
 }

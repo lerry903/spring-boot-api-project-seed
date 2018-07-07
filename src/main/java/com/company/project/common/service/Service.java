@@ -1,4 +1,4 @@
-package com.company.project.core;
+package com.company.project.common.service;
 
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import tk.mybatis.mapper.entity.Condition;
@@ -29,7 +29,7 @@ public interface Service<T> {
      * @param id
      * @return
      */
-    int deleteById(Integer id);
+    int deleteById(Long id);
 
     /**
      * 批量刪除 eg：ids -> “1,2,3,4”
@@ -50,7 +50,7 @@ public interface Service<T> {
      * @param id
      * @return
      */
-    T findById(Integer id);
+    T findById(Long id);
 
     /**
      * 通过Model中某个成员变量名称（非数据表中column的名称）查找,value需符合unique约束
