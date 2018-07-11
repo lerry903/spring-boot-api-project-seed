@@ -4,6 +4,10 @@
 ## 简介
 Spring Boot API Project Seed 是一个基于Spring Boot & MyBatis的种子项目，用于快速构建中小型API、RESTful API项目，该种子项目已经有过多个真实项目的实践，稳定、简单、快速，使我们摆脱那些重复劳动，专注于业务代码的编写，减少加班。
 
+- 源码地址
+  - GitHub：https://github.com/lerry903/spring-boot-api-project-seed
+  - 码云：https://gitee.com/lerry903/spring-boot-api-project-seed
+
 ## 特征&提供
 - 最佳实践的项目结构、配置文件、精简的POM
 - 统一响应结果封装
