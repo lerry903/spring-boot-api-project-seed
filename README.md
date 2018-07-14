@@ -31,9 +31,10 @@ Spring Boot API Project Seed 是一个基于Spring Boot & MyBatis的种子项目
 5. 对开发环境配置文件```application-dev.properties```进行配置，启动项目，Have Fun！
  
 ## 开发建议
+- JDK 1.8，Tomcat 8.5以上（强烈建议）
 - 表名，建议使用小写，多个单词使用下划线拼接
 - Model内成员变量建议与表字段数量对应，如需扩展成员变量（比如连表查询）建议创建DTO，否则需在扩展的成员变量上加```@Transient```注解，详情见[通用Mapper插件文档说明](https://mapperhelper.github.io/docs/2.use/)
-- 建议业务失败使用```BusinessException```子类抛出，由统一异常处理器来封装业务失败的响应结果，比如```throw new DataNotFoundException()```，会直接被封装为```{"code":50001,"message":"数据未找到"}```返回，无需自己处理，尽情抛出
+- 建议业务失败使用```BusinessException```子类抛出，由统一异常处理器来封装业务失败的响应结果，比如```throw new DataNotFoundException(ResultCode.RESULE_DATA_NONE);```，会直接被封装为```{"code":50001,"message":"数据未找到"}```返回，无需自己处理，尽情抛出
 - 需要工具类的话建议先从```Hutool```中找，实在没有再继承```Hutool```中相应的工具类造轮子或引入类库，尽量精简项目
 - 开发规范建议遵循阿里巴巴Java开发手册（[最新版下载](https://github.com/alibaba/p3c))
  
