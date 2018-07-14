@@ -27,12 +27,6 @@ public class BusinessException extends RuntimeException {
     protected Object data;
 
     public BusinessException() {
-        ExceptionEnum exceptionEnum = ExceptionEnum.getByEClass(this.getClass());
-        if (exceptionEnum != null) {
-            resultCode = exceptionEnum.getResultCode();
-            code = exceptionEnum.getResultCode().code().toString();
-            message = exceptionEnum.getResultCode().message();
-        }
 
     }
 
