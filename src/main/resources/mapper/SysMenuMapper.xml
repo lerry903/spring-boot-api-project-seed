@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.auth.dao.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.auth.model.SysMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="secured" jdbcType="VARCHAR" property="secured" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+  </resultMap>
+</mapper>
