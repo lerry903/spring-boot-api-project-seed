@@ -1,5 +1,6 @@
 package com.company.project.common.result;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.company.project.common.interceptor.ResponseResultInterceptor;
 import com.company.project.common.util.RequestContextHolderUtil;
 import org.springframework.core.MethodParameter;
@@ -23,7 +24,7 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         ResponseResult responseResultAnn = (ResponseResult) RequestContextHolderUtil.getRequest().getAttribute(ResponseResultInterceptor.RESPONSE_RESULT);
-        return responseResultAnn == null ? false : true;
+        return ObjectUtil.isNotNull(responseResultAnn);
     }
 
     @Override
